@@ -19,11 +19,13 @@
 #include <QtPlugin>
 
 // OpenCV Logic includes
-//#include <vtkSlicerOpenCVLogic.h>
+#include <vtkSlicerOpenCVLogic.h>
 
 // OpenCV includes
 #include "qSlicerOpenCVModule.h"
 //#include "qSlicerOpenCVModuleWidget.h"
+
+// ITK includes
 
 //-----------------------------------------------------------------------------
 Q_EXPORT_PLUGIN2(qSlicerOpenCVModule, qSlicerOpenCVModule);
@@ -62,7 +64,7 @@ qSlicerOpenCVModule::~qSlicerOpenCVModule()
 //-----------------------------------------------------------------------------
 QString qSlicerOpenCVModule::helpText() const
 {
-  return "This is a loadable module that can be bundled in an extension";
+  return "This is a loadable module that provides access to OpenCV";
 }
 
 //-----------------------------------------------------------------------------
@@ -113,5 +115,5 @@ qSlicerAbstractModuleRepresentation* qSlicerOpenCVModule
 //-----------------------------------------------------------------------------
 vtkMRMLAbstractLogic* qSlicerOpenCVModule::createLogic()
 {
-  return NULL;
+  return vtkSlicerOpenCVLogic::New();
 }
