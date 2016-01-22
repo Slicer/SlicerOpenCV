@@ -16,6 +16,7 @@ set(EXTENSION_SCREENSHOTURLS "")
 find_package(Slicer REQUIRED)
 message(STATUS "including ${Slicer_USE_FILE}")
 include(${Slicer_USE_FILE})
+message(STATUS "After slicer use file include, PYTHON_EXECUTABLE = ${PYTHON_EXECUTABLE}")
 
 #-----------------------------------------------------------------------------
 # Compile OpenCV as an external project if not using the system one
@@ -65,6 +66,9 @@ if(NOT DEFINED opencv_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DCMAKE_CXX_FLAGS:STRING=${ep_common_cxx_flags}
       -DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}
       -DCMAKE_C_FLAGS:STRING=${ep_common_c_flags}
+      -DWITH_IPP:BOOL=OFF
+      # python settings to use the Slicer one
+      -DPYTHON2_EXECUTABLE:PATH=${PYTHON_EXECUTABLE}
       -DOPENCV_MANGLE_PREFIX:STRING=slicer_opencv_
       -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
       -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
