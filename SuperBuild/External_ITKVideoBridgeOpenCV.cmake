@@ -28,7 +28,6 @@ ExternalProject_Add(${proj}
     -DCMAKE_CXX_FLAGS:STRING=${ep_common_cxx_flags}
     -DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}
     -DCMAKE_C_FLAGS:STRING=${ep_common_c_flags}
-    -DCMAKE_BUILD_TYPE:STRING=Debug
     # to find ITKConfig.cmake
     -DITK_DIR:PATH=${ITK_DIR}
     -DBUILD_TESTING:BOOL=OFF
