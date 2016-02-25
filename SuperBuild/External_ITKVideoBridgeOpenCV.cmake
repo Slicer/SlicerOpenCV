@@ -42,7 +42,7 @@ ExternalProject_Add(${proj}
   DEPENDS ${${proj}_DEPENDENCIES}
 )
 
-#mark_as_superbuild(
-#  VARS ${proj}_SOURCE_DIR:PATH
-#  LABELS "FIND_PACKAGE"
-#  )
+set(${proj}_DIR ${${proj}_BINARY_DIR})
+mark_as_superbuild(VARS ${proj}_DIR:PATH)
+
+ExternalProject_Message(${proj} "${proj}_DIR:${${proj}_DIR}")
