@@ -33,13 +33,8 @@ ExternalProject_Add(${proj}
     -DBUILD_TESTING:BOOL=OFF
     -DITK_INSTALL_RUNTIME_DIR:STRING=${Slicer_INSTALL_LIB_DIR}
     -DITK_INSTALL_LIBRARY_DIR:STRING=${Slicer_INSTALL_LIB_DIR}
-    # OpenCV
-    -DOpenCV_INCLUDE_DIRS:STRING=${OpenCV_INCLUDE_DIR};${OpenCV_INCLUDE_DIR}/opencv
-    -DOpenCV_LIB_DIR:PATH=${OpenCV_DIR}/lib
-    -DOpenCV_DIR:PATH=${OpenCV_DIR}/share/OpenCV
-    -DOpenCV_LIB_DIR_DBG:PATH=${OpenCV_DIR}/lib
-    -DOpenCV_LIB_DIR_OPT:PATH=${OpenCV_DIR}/lib
-    -DOpenCV_LIBS:STRING=opencv_core;opencv_videoio;opencv_imgproc
+    # to find OpenCVConfig.cmake
+    -DOpenCV_DIR:PATH=${OpenCV_DIR}
   DEPENDS ${${proj}_DEPENDENCIES}
 )
 

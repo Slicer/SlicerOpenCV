@@ -33,7 +33,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       URL_MD5 "e6c72f54f7127161b371ef798f34d5c9"
       )
   endif()
-  set(${proj}_INSTALL_DIR ${CMAKE_BINARY_DIR}/${Slicer_QTLOADABLEMODULES_LIB_DIR})
+  set(${proj}_INSTALL_DIR ${CMAKE_BINARY_DIR}/${proj}-install)
 
   ExternalProject_Message(${proj} "${proj}_SOURCE_DIR:${${proj}_SOURCE_DIR}")
 
@@ -59,22 +59,12 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       ${${proj}_DEPENDENCIES}
     )
 
-  set(OpenCV_DIR ${${proj}_INSTALL_DIR})
-  set(OpenCV_ROOT ${OpenCV_DIR})
-  set(OpenCV_INCLUDE_DIR ${OpenCV_DIR}/include)
-  if(WIN32)
-    set(OpenCV_LIBRARY ${OpenCV_DIR}/opencv.lib)
-  else()
-    set(OpenCV_LIBRARY ${OpenCV_DIR}/libopencv.a)
-  endif()
+  set(OpenCV_DIR ${${proj}_INSTALL_DIR}/share/OpenCV)
 else()
   # The project is provided using OpenCV_DIR, nevertheless since other projects
   # may depend on OpenCV, let's add an 'empty' one
   ExternalProject_Add_Empty(${proj} DEPENDS ${${proj}_DEPENDENCIES})
 endif()
 
-ExternalProject_Message(${proj} "OpenCV_INCLUDE_DIR:${OpenCV_INCLUDE_DIR}")
-ExternalProject_Message(${proj} "OpenCV_LIBRARY:${OpenCV_LIBRARY}")
-if(OPENCV_ROOT)
-  ExternalProject_Message(${proj} "OpenCV_ROOT:${OpenCV_ROOT}")
-endif()
+ExternalProject_Message(${proj} "OpenCV_DIR:${OpenCV_DIR}")
+mark_as_superbuild(OpenCV_DIR:PATH)
