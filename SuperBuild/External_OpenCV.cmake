@@ -52,9 +52,37 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DPYTHON2_EXECUTABLE:PATH=${PYTHON_EXECUTABLE}
       -DOPENCV_MANGLE_PREFIX:STRING=slicer_opencv_
       -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-      -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
-      -DBUILD_TESTING:BOOL=ON
-      -DBUILD_EXAMPLES:BOOL=ON
+      -DBUILD_SHARED_LIBS:BOOL=OFF
+      -DBUILD_DOCS:BOOL=OFF
+      -DBUILD_EXAMPLES:BOOL=OFF
+      -DBUILD_PERF_TESTS:BOOL=OFF
+      -DBUILD_TESTING:BOOL=OFF
+      -DBUILD_TESTS:BOOL=OFF
+      -DBUILD_WITH_DEBUG_INFO:BOOL=OFF
+      # Enable modules
+      -DBUILD_opencv_core:BOOL=ON
+      -DBUILD_opencv_hal:BOOL=ON
+      -DBUILD_opencv_highgui:BOOL=ON
+      -DBUILD_opencv_imgcodecs:BOOL=ON
+      -DBUILD_opencv_imgproc:BOOL=ON
+      -DBUILD_opencv_ml:BOOL=ON
+      -DBUILD_opencv_objdetect:BOOL=ON
+      -DBUILD_opencv_photo:BOOL=ON
+      -DBUILD_opencv_video:BOOL=ON
+      -DBUILD_opencv_videoio:BOOL=ON
+      # Enable modules required by the fact ITK calls 'find_package(OpenCV)' without specifying components.
+      -DBUILD_opencv_calib3d:BOOL=ON
+      -DBUILD_opencv_features2d:BOOL=ON
+      -DBUILD_opencv_flann:BOOL=ON
+      -DBUILD_opencv_shape:BOOL=ON
+      -DBUILD_opencv_stitching:BOOL=ON
+      -DBUILD_opencv_superres:BOOL=ON
+      -DBUILD_opencv_videostab:BOOL=ON
+      # Disable unused modules
+      -DBUILD_opencv_apps:BOOL=OFF
+      -DBUILD_opencv_python2:BOOL=OFF
+      -DBUILD_opencv_ts:BOOL=OFF
+      -DBUILD_opencv_world:BOOL=OFF
     DEPENDS
       ${${proj}_DEPENDENCIES}
     )
