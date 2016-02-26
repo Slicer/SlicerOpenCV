@@ -34,6 +34,10 @@ if(${EXTENSION_NAME}_SUPERBUILD)
 endif()
 
 #-----------------------------------------------------------------------------
+# Clear ${PROJECT_NAME}Targets.cmake
+file(WRITE ${CMAKE_BINARY_DIR}/${Slicer_SHARE_DIR}/${PROJECT_NAME}Targets.cmake "")
+
+#-----------------------------------------------------------------------------
 # Extension modules
 # Slicer wrapper around the library
 add_subdirectory(OpenCV)
@@ -43,3 +47,24 @@ add_subdirectory(OpenCV)
 set(CPACK_INSTALL_CMAKE_PROJECTS "${CPACK_INSTALL_CMAKE_PROJECTS};${CMAKE_BINARY_DIR};${EXTENSION_NAME};ALL;/")
 set(CPACK_INSTALL_CMAKE_PROJECTS "${CPACK_INSTALL_CMAKE_PROJECTS};${ITKVideoBridgeOpenCV_DIR};ITKVideoBridgeOpenCV;RuntimeLibraries;/")
 include(${Slicer_EXTENSION_CPACK})
+
+#-----------------------------------------------------------------------------
+if(NOT Slicer_SOURCE_DIR)
+  # Configure 'SlicerOpenCVConfig.cmake'
+  include(CMakePackageConfigHelpers)
+
+  message("OpenCV_DIR:${OpenCV_DIR}")
+  # For a build tree
+  set(SHARE_DIR_CONFIG ${CMAKE_BINARY_DIR}/${Slicer_SHARE_DIR})
+  set(OpenCV_DIR_CONFIG ${OpenCV_DIR})
+  set(${PROJECT_NAME}_CONFIG_CODE "####### Expanded from \@SlicerOpenCV_CONFIG_CODE\@ #######\n")
+  set(${PROJECT_NAME}_CONFIG_CODE "${${PROJECT_NAME}_CONFIG_CODE}##################################################")
+  set(_config ${CMAKE_BINARY_DIR}/${PROJECT_NAME}Config.cmake)
+  configure_package_config_file(
+      CMake/${PROJECT_NAME}Config.cmake.in
+      ${_config}
+      INSTALL_DESTINATION ${CMAKE_BINARY_DIR}
+      PATH_VARS SHARE_DIR_CONFIG OpenCV_DIR_CONFIG
+      NO_CHECK_REQUIRED_COMPONENTS_MACRO
+  )
+endif()
