@@ -29,8 +29,8 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
   else()
     set(${proj}_SOURCE_DIR ${CMAKE_BINARY_DIR}/${proj}-source)
     list(APPEND ${proj}_EP_ARGS
-      URL "https://github.com/Itseez/opencv/archive/3.0.0.tar.gz"
-      URL_MD5 "e6c72f54f7127161b371ef798f34d5c9"
+      URL "https://github.com/Itseez/opencv/archive/3.1.0.tar.gz"
+      URL_MD5 "70e1dd07f0aa06606f1bc0e3fa15abd3"
       )
   endif()
   set(${proj}_INSTALL_DIR ${CMAKE_BINARY_DIR}/${proj}-install)
@@ -61,7 +61,6 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DBUILD_WITH_DEBUG_INFO:BOOL=OFF
       # Enable modules
       -DBUILD_opencv_core:BOOL=ON
-      -DBUILD_opencv_hal:BOOL=ON
       -DBUILD_opencv_highgui:BOOL=ON
       -DBUILD_opencv_imgcodecs:BOOL=ON
       -DBUILD_opencv_imgproc:BOOL=ON

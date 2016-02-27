@@ -7,17 +7,15 @@ find_package(ITK COMPONENTS ITKVideoBridgeOpenCV REQUIRED)
 include(${ITK_USE_FILE})
 
 #-----------------------------------------------------------------------------
-find_package(OpenCV REQUIRED)
+find_package(OpenCV 3.1 REQUIRED)
 message(STATUS "OpenCV library status:")
 message(STATUS "    version: ${OpenCV_VERSION}")
 message(STATUS "    libraries: ${OpenCV_LIBS}")
-message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 
 #-----------------------------------------------------------------------------
 set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT")
 
 set(${KIT}_INCLUDE_DIRECTORIES
-  ${OpenCV_INCLUDE_DIRS}
   )
 
 set(${KIT}_SRCS
