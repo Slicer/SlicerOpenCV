@@ -16,6 +16,8 @@ communicate your requirements, and we will consider them in our development.
 * Lead developer: Nicole Aucoin (https://github.com/naucoin)
 * Project PI: Andrey Fedorov (https://github.com/fedorov or
   andrey.fedorov@gmail.com)
+* Contributors:
+ * Jean-Christophe Fillion-Robin (https://github.com/jcfr)
 
 You can also post your questions or considerations to the 3D Slicer developer
 list: http://massmail.spl.harvard.edu/mailman/listinfo/slicer-devel

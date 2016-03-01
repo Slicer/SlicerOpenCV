@@ -2,32 +2,32 @@ project(vtkSlicer${MODULE_NAME}ModuleLogic)
 
 set(KIT ${PROJECT_NAME})
 
+#-----------------------------------------------------------------------------
+find_package(ITK COMPONENTS ITKVideoBridgeOpenCV REQUIRED)
+include(${ITK_USE_FILE})
+
+#-----------------------------------------------------------------------------
+find_package(OpenCV 3.1 REQUIRED)
+message(STATUS "OpenCV library status:")
+message(STATUS "    version: ${OpenCV_VERSION}")
+message(STATUS "    libraries: ${OpenCV_LIBS}")
+
+#-----------------------------------------------------------------------------
 set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT")
 
-set(MODULE_INCLUDE_DIRECTORY_BASE ${CMAKE_CURRENT_BINARY_DIR}/../../${Slicer_QTLOADABLEMODULES_LIB_DIR}/include)
 set(${KIT}_INCLUDE_DIRECTORIES
-  ${MODULE_INCLUDE_DIRECTORY_BASE}
-  ${MODULE_INCLUDE_DIRECTORY_BASE}/opencv
-  ${MODULE_INCLUDE_DIRECTORY_BASE}/ITK-4.9
   )
-MESSAGE(STATUS "${KIT} include dirs = ${${KIT}_INCLUDE_DIRECTORIES}")
 
 set(${KIT}_SRCS
   vtkSlicer${MODULE_NAME}Logic.cxx
   vtkSlicer${MODULE_NAME}Logic.h
   )
 
-set(MODULE_TARGET_LIBRARY_BASE ${CMAKE_CURRENT_BINARY_DIR}/../../${Slicer_QTLOADABLEMODULES_LIB_DIR}/lib)
-MESSAGE(STATUS "Logic target library base = ${MODULE_TARGET_LIBRARY_BASE}")
-link_directories(${MODULE_TARGET_LIBRARY_BASE})
 
 set(${KIT}_TARGET_LIBRARIES
-  opencv_videoio
-  ITKVideoBridgeOpenCV-4.9
-#  ${ITKVideoBridgeOpenCV_LIBRARIES}
-#  ITKVideoBridgeOpenCV
+  ${OpenCV_LIBS}
+  ${ITK_LIBRARIES}
   )
-
 
 #-----------------------------------------------------------------------------
 SlicerMacroBuildModuleLogic(
