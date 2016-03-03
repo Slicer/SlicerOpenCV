@@ -82,6 +82,8 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DBUILD_opencv_python2:BOOL=OFF
       -DBUILD_opencv_ts:BOOL=OFF
       -DBUILD_opencv_world:BOOL=OFF
+      # Disable VTK: not used, and is causing problems
+      -DWITH_VTK:BOOL=OFF
     DEPENDS
       ${${proj}_DEPENDENCIES}
     )
