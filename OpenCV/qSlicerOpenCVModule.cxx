@@ -70,7 +70,7 @@ QString qSlicerOpenCVModule::helpText() const
 //-----------------------------------------------------------------------------
 QString qSlicerOpenCVModule::acknowledgementText() const
 {
-  return "This work was partially funded by NIH grant NXNNXXNNNNNN-NNXN";
+  return "This work was supported by a supplement to the Quantitative Image Informatics project via the NIH-National Cancer Institute Grant U24 CA180918-03 as well as U24 CA180924 Tools to Analyze Morphology and Spatially Mapped Molecular Data with Stony Brook University.";
 }
 
 //-----------------------------------------------------------------------------
@@ -78,13 +78,15 @@ QStringList qSlicerOpenCVModule::contributors() const
 {
   QStringList moduleContributors;
   moduleContributors << QString("Nicole Aucoin (BWH)");
+  moduleContributors << QString("Andrey Fedorov (BWH)");
+  moduleContributors << QString("Jean-Christophe Fillion-Robin (Kitware)");
   return moduleContributors;
 }
 
 //-----------------------------------------------------------------------------
 QIcon qSlicerOpenCVModule::icon() const
 {
-  return QIcon(":/Icons/OpenCV.png");
+  return QIcon(":/Icons/SlicerOpenCV.png");
 }
 
 //-----------------------------------------------------------------------------
@@ -116,4 +118,10 @@ qSlicerAbstractModuleRepresentation* qSlicerOpenCVModule
 vtkMRMLAbstractLogic* qSlicerOpenCVModule::createLogic()
 {
   return vtkSlicerOpenCVLogic::New();
+}
+
+//-----------------------------------------------------------------------------
+bool qSlicerOpenCVModule::isHidden()const
+{
+  return true;
 }
