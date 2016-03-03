@@ -45,6 +45,10 @@ public:
   virtual QString acknowledgementText()const;
   virtual QStringList contributors()const;
 
+  /// This module is hidden as it doesn't provide a GUI but it can still be
+  /// accessed programatically.
+  virtual bool isHidden()const;
+
   virtual QIcon icon()const;
 
   virtual QStringList categories()const;
