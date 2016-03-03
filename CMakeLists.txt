@@ -8,7 +8,7 @@ set(EXTENSION_HOMEPAGE "http://slicer.org/slicerWiki/index.php/Documentation/Nig
 set(EXTENSION_CATEGORY "Libraries")
 set(EXTENSION_CONTRIBUTORS "Nicole Aucoin (BWH), Andrey Fedorov (BWH), Jean-Christophe Fillion-Robin (Kitware)")
 set(EXTENSION_DESCRIPTION "This extension provides a wrapper around OpenCV libraries")
-set(EXTENSION_ICONURL "https://github.com/SBU-BMI/SlicerOpenCV/blob/master/SlicerOpenCV.png")
+set(EXTENSION_ICONURL "https://raw.githubusercontent.com/SBU-BMI/SlicerOpenCV/master/SlicerOpenCV.png")
 set(EXTENSION_SCREENSHOTURLS "")
 set(EXTENSION_BUILD_SUBDIRECTORY inner-build)
 
