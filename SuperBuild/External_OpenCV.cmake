@@ -84,6 +84,8 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DBUILD_opencv_world:BOOL=OFF
       # Disable VTK: not used, and is causing problems
       -DWITH_VTK:BOOL=OFF
+      # Disable OpenCL: Initially disabled because of build errors on MacOSX 10.6 (See #17)
+      -DWITH_OPENCL:BOOL=OFF
     DEPENDS
       ${${proj}_DEPENDENCIES}
     )
