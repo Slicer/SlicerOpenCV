@@ -86,6 +86,8 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DWITH_VTK:BOOL=OFF
       # Disable OpenCL: Initially disabled because of build errors on MacOSX 10.6 (See #17)
       -DWITH_OPENCL:BOOL=OFF
+      # Disable creating a fat java wrapper containing the whole OpenCV library
+      -DBUILD_FAT_JAVA_LIB:BOOL=OFF
     DEPENDS
       ${${proj}_DEPENDENCIES}
     )
