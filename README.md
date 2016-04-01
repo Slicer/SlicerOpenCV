@@ -1,7 +1,7 @@
 # SlicerOpenCV
 
 This is work in progress to develop an OpenCV (http://opencv.org/) extension 
-for 3D Slicr (http://slicer.org).
+for 3D Slicer (http://slicer.org).
 
 See this Slicer labs page for details on what features will be provided by the
 extension, design decisions and such:
