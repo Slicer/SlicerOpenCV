@@ -40,7 +40,7 @@ file(WRITE ${CMAKE_BINARY_DIR}/${Slicer_SHARE_DIR}/${PROJECT_NAME}Targets.cmake 
 #-----------------------------------------------------------------------------
 # Extension modules
 # Slicer wrapper around the library
-add_subdirectory(OpenCV)
+add_subdirectory(SlicerOpenCV)
 ## NEXT_MODULE
 
 #-----------------------------------------------------------------------------
