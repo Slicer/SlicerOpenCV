@@ -6,7 +6,9 @@ for 3D Slicer (http://slicer.org).
 See this Slicer labs page for details on what features will be provided by the
 extension, design decisions and such:
 
-http://wiki.slicer.org/slicerWiki/index.php/Documentation/Labs/OpenCV
+Planning and development page: http://wiki.slicer.org/slicerWiki/index.php/Documentation/Labs/OpenCV
+
+Extension documentation page: http://wiki.slicer.org/slicerWiki/index.php/Documentation/Nightly/Extensions/SlicerOpenCV
 
 # Contact
 
