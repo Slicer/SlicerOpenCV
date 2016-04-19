@@ -91,8 +91,10 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
     DEPENDS
       ${${proj}_DEPENDENCIES}
     )
-
-  set(OpenCV_DIR ${${proj}_INSTALL_DIR}/share/OpenCV)
+  set(OpenCV_DIR ${${proj}_INSTALL_DIR})
+  if(UNIX)
+    set(OpenCV_DIR ${${proj}_INSTALL_DIR}/share/OpenCV)
+  endif()
 else()
   # The project is provided using OpenCV_DIR, nevertheless since other projects
   # may depend on OpenCV, let's add an 'empty' one
