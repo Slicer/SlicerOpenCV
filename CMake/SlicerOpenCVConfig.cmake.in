@@ -1,5 +1,6 @@
 @PACKAGE_INIT@
 
+set(OpenCV_STATIC "@OpenCV_STATIC@")
 set_and_check(OpenCV_DIR "@PACKAGE_OpenCV_DIR_CONFIG@")
 set_and_check(SlicerOpenCV_SHARE_DIR "@PACKAGE_SHARE_DIR_CONFIG@")
 set_and_check(SlicerOpenCV_TARGETS "@PACKAGE_SHARE_DIR_CONFIG@/SlicerOpenCVTargets.cmake")
