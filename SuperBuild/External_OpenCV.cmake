@@ -48,6 +48,8 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}
       -DCMAKE_C_FLAGS:STRING=${ep_common_c_flags}
       -DWITH_IPP:BOOL=OFF
+      # Uses runtime compatible with ITK. See issue #26
+      -DBUILD_WITH_STATIC_CRT:BOOL=OFF
       # python settings to use the Slicer one
       -DPYTHON2_EXECUTABLE:PATH=${PYTHON_EXECUTABLE}
       -DOPENCV_MANGLE_PREFIX:STRING=slicer_opencv_
