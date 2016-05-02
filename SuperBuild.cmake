@@ -30,6 +30,11 @@ if(NOT CMAKE_CONFIGURATION_TYPES)
   mark_as_superbuild(VARS CMAKE_BUILD_TYPE ALL_PROJECTS)
 endif()
 
+# Ensure call to "find_package(OpenCV)" made in any projects
+# look for static libraries
+set(OpenCV_STATIC 1)
+mark_as_superbuild(VARS OpenCV_STATIC ALL_PROJECTS)
+
 set(proj ${SUPERBUILD_TOPLEVEL_PROJECT})
 set(${proj}_DEPENDS ITKVideoBridgeOpenCV)
 
