@@ -25,6 +25,7 @@ set(${KIT}_SRCS
 
 
 set(${KIT}_TARGET_LIBRARIES
+  ${VTK_LIBRARIES}
   ${OpenCV_LIBS}
   ${ITK_LIBRARIES}
   )
