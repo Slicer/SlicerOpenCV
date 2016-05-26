@@ -26,18 +26,8 @@
 #include <vtkNew.h>
 #include <vtkObjectFactory.h>
 
-// STD includes
-#include <cassert>
-#include <iostream>
-
-// OpenCV includes
-#include <cv.h>
-#include <highgui.h>
-
 // ITK includes
-#include <itkVideoIOFactory.h>
 #include <itkOpenCVVideoIOFactory.h>
-#include <itkOpenCVVideoIO.h>
 
 //----------------------------------------------------------------------------
 vtkStandardNewMacro(vtkSlicerOpenCVLogic);
@@ -45,35 +35,8 @@ vtkStandardNewMacro(vtkSlicerOpenCVLogic);
 //----------------------------------------------------------------------------
 vtkSlicerOpenCVLogic::vtkSlicerOpenCVLogic()
 {
-  std::cout << "Logic!" << std::endl;
-
   // register the OpenCV ITK IO factory
   itk::ObjectFactoryBase::RegisterFactory( itk::OpenCVVideoIOFactory::New() );
-  itk::OpenCVVideoIO *videoIO = itk::OpenCVVideoIO::New();
-
-  if (0)
-    {
-    // will cause a crash on start up without proper settings
-    std::cout << "Trying to create IO for reading from file..." << std::endl;
-    char *input = NULL;
-    itk::VideoIOBase::Pointer ioReadFile = itk::VideoIOFactory::CreateVideoIO(
-      itk::VideoIOFactory::ReadFileMode, input);
-    if (!ioReadFile)
-      {
-      std::cerr << "Did not create valid VideoIO for reading from file " << std::endl;
-      return;
-      }
-
-
-    itk::SizeValueType cameraNumber = 0;
-    // Use openCV to see if we can even try to open the camera
-    CvCapture* cameraCapture = cvCaptureFromCAM( cameraNumber );
-    if (cameraCapture == ITK_NULLPTR)
-      {
-      std::cerr << "Unable to create a camera to capture from" << std::endl;
-      return;
-      }
-    }
 
 }
 
