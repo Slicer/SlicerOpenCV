@@ -36,6 +36,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
   set(${proj}_INSTALL_DIR ${CMAKE_BINARY_DIR}/${proj}-install)
 
   ExternalProject_Message(${proj} "${proj}_SOURCE_DIR:${${proj}_SOURCE_DIR}")
+  ExternalProject_Message(${proj} "Slicer_INSTALL_THIRDPARTY_LIB_DIR = ${Slicer_INSTALL_THIRDPARTY_LIB_DIR}")
 
   ExternalProject_Add(${proj}
     ${${proj}_EP_ARGS}
@@ -50,8 +51,6 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DWITH_IPP:BOOL=OFF
       # Uses runtime compatible with ITK. See issue #26
       -DBUILD_WITH_STATIC_CRT:BOOL=OFF
-      # python settings to use the Slicer one
-      -DPYTHON2_EXECUTABLE:PATH=${PYTHON_EXECUTABLE}
       -DOPENCV_MANGLE_PREFIX:STRING=slicer_opencv_
       -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
       -DBUILD_SHARED_LIBS:BOOL=OFF
@@ -81,7 +80,6 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DBUILD_opencv_videostab:BOOL=ON
       # Disable unused modules
       -DBUILD_opencv_apps:BOOL=OFF
-      -DBUILD_opencv_python2:BOOL=OFF
       -DBUILD_opencv_ts:BOOL=OFF
       -DBUILD_opencv_world:BOOL=OFF
       # Disable VTK: not used, and is causing problems
@@ -90,6 +88,14 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DWITH_OPENCL:BOOL=OFF
       # Disable find_package(Java) so that java wrapping is not done
       -DCMAKE_DISABLE_FIND_PACKAGE_JAVA:BOOL=ON
+      # Add Python wrapping, use Slicer's python
+      -DBUILD_opencv_python2:BOOL=ON
+      -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE}
+      -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
+      -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
+      -DINSTALL_PYTHON_EXAMPLES:BOOL=OFF
+      # install the python package in the third party lib dir
+      -DPYTHON2_PACKAGES_PATH:PATH=${Slicer_INSTALL_THIRDPARTY_LIB_DIR}
     DEPENDS
       ${${proj}_DEPENDENCIES}
     )
@@ -105,3 +111,13 @@ endif()
 
 ExternalProject_Message(${proj} "OpenCV_DIR:${OpenCV_DIR}")
 mark_as_superbuild(OpenCV_DIR:PATH)
+
+# Set the python wrapped library path for the extension cmake file
+set(${proj}_PYTHON_LIB_DIR ${CMAKE_BINARY_DIR}/${proj}-build/lib)
+ExternalProject_Message(${proj} "OpenCV_PYTHON_LIB_DIR = ${${proj}_PYTHON_LIB_DIR}")
+mark_as_superbuild(${proj}_PYTHON_LIB_DIR:PATH)
+
+# Set this build directory for the upper level cmake file
+set(${proj}_BUILD_DIR ${CMAKE_BINARY_DIR}/${proj}-build)
+ExternalProject_Message(${proj} "OpenCV_BUILD_DIR = ${${proj}_BUILD_DIR}")
+mark_as_superbuild(${proj}_BUILD_DIR)
