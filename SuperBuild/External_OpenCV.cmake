@@ -29,8 +29,8 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
   else()
     set(${proj}_SOURCE_DIR ${CMAKE_BINARY_DIR}/${proj}-source)
     list(APPEND ${proj}_EP_ARGS
-      URL "https://github.com/Itseez/opencv/archive/3.1.0.tar.gz"
-      URL_MD5 "a0669e22172dfc3225835b180744c9f0"
+      URL "https://github.com/Itseez/opencv/archive/3.3.1.tar.gz"
+      URL_MD5 "b1ed9aea030bb5bd9df28524d97de84c"
       )
   endif()
   set(${proj}_INSTALL_DIR ${CMAKE_BINARY_DIR}/${proj}-install)
