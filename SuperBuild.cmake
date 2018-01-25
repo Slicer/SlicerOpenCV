@@ -10,6 +10,16 @@ if(NOT Slicer_USE_GIT_PROTOCOL)
 endif()
 
 #-----------------------------------------------------------------------------
+# Give option to only build for a specific instruction set
+#-----------------------------------------------------------------------------
+set(Slicer_CUDA_GENERATION)
+set(_generations "Fermi" "Kepler" "Maxwell" "Pascal" "Volta")
+set(Slicer_CUDA_GENERATION "" CACHE STRING "Build CUDA device code only for specific GPU architecture. Leave empty to build for all architectures.")
+if( CMAKE_VERSION VERSION_GREATER 2.8 )
+  set_property( CACHE Slicer_CUDA_GENERATION PROPERTY STRINGS "" ${_generations} )
+endif()
+
+#-----------------------------------------------------------------------------
 # Enable and setup External project global properties
 #-----------------------------------------------------------------------------
 
