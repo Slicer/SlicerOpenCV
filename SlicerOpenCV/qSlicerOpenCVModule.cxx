@@ -15,22 +15,27 @@
 
 ==============================================================================*/
 
+// Core includes
+#include <qSlicerExtensionsManagerModel.h>
+#include <qSlicerApplication.h>
+#include <qSlicerCorePythonManager.h>
+
 // Qt includes
 #include <QtPlugin>
+#include <QtCore>
 
-// OpenCV Logic includes
+// SlicerOpenCV Logic includes
 #include <vtkSlicerOpenCVLogic.h>
 
-// OpenCV includes
+// SlicerOpenCV includes
 #include "qSlicerOpenCVModule.h"
-//#include "qSlicerOpenCVModuleWidget.h"
 
 // ITK includes
 
 //-----------------------------------------------------------------------------
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-#include <QtPlugin>
-Q_EXPORT_PLUGIN2(qSlicerOpenCVModule, qSlicerOpenCVModule);
+  #include <QtPlugin>
+  Q_EXPORT_PLUGIN2(qSlicerOpenCVModule, qSlicerOpenCVModule);
 #endif
 
 //-----------------------------------------------------------------------------
@@ -108,6 +113,34 @@ QStringList qSlicerOpenCVModule::dependencies() const
 void qSlicerOpenCVModule::setup()
 {
   this->Superclass::setup();
+
+  qSlicerExtensionsManagerModel* model = qSlicerApplication::application()->extensionsManagerModel();
+  QString settingsPath = model->extensionsSettingsFilePath();
+  QSettings settings(settingsPath, QSettings::IniFormat);
+  if (settings.status() != QSettings::NoError)
+  {
+    qWarning() << (QString("Failed to open extensions settings file %1. Python access to OpenCV will not be available.").arg(settingsPath));
+    return;
+  }
+
+  // Determine this extensions root install path
+  QString path = model->extensionInstallPath("SlicerOpenCV");
+
+  // Check if path already exists
+  QStringList pythonPaths = qSlicerExtensionsManagerModel::readArrayValues(settings, "PYTHONPATH", "path");
+  for (QStringList::const_iterator iter = pythonPaths.constBegin(); iter != pythonPaths.constEnd(); ++iter)
+  {
+    if (*iter == path)
+    {
+      // Found, no need to continue
+      return;
+    }
+  }
+  pythonPaths << path;
+  qSlicerExtensionsManagerModel::writeArrayValues(settings, pythonPaths, "PYTHONPATH", "path");
+
+  // Add the path to this running instances path list
+  qSlicerApplication::application()->corePythonManager()->appendPythonPath(path);
 }
 
 //-----------------------------------------------------------------------------
