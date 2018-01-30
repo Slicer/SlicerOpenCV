@@ -35,6 +35,11 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
   endif()
   set(${proj}_INSTALL_DIR ${CMAKE_BINARY_DIR}/${proj}-install)
 
+  if(APPLE)
+    # Workaround for OpenCV 3.2+ and OSX clang compiler issues
+	list(APPEND ADDITIONAL_OPENCV_ARGS -DBUILD_PROTOBUF:BOOL=OFF)
+  endif()
+
   ExternalProject_Message(${proj} "${proj}_SOURCE_DIR:${${proj}_SOURCE_DIR}")
   ExternalProject_Message(${proj} "Slicer_INSTALL_THIRDPARTY_LIB_DIR = ${Slicer_INSTALL_THIRDPARTY_LIB_DIR}")
 
@@ -96,6 +101,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DINSTALL_PYTHON_EXAMPLES:BOOL=OFF
       # install the python package in the third party lib dir
       -DPYTHON2_PACKAGES_PATH:PATH=${Slicer_INSTALL_THIRDPARTY_LIB_DIR}
+	  ${ADDITIONAL_OPENCV_ARGS}
     DEPENDS
       ${${proj}_DEPENDENCIES}
     )
