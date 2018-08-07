@@ -13,12 +13,6 @@ Extension documentation page: http://wiki.slicer.org/slicerWiki/index.php/Docume
 
 Questions regarding this extension should be posted on 3D Slicer forum: https://discourse.slicer.org
 
-* Lead developer: Nicole Aucoin (https://github.com/naucoin)
-* Project PI: Andrey Fedorov (https://github.com/fedorov or
-  andrey.fedorov@gmail.com)
-* Contributors:
- * Jean-Christophe Fillion-Robin (https://github.com/jcfr)
-
 # Acknowledgments
 
 This work was supported in part by an administrative supplement to the NIH NCI
