@@ -40,6 +40,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
     list(APPEND ADDITIONAL_OPENCV_ARGS -DBUILD_PROTOBUF:BOOL=OFF)
   endif()
 
+  option(SlicerOpenCV_USE_CUDA "Enable or disable the building of CUDA modules" OFF)
   ExternalProject_Message(${proj} "${proj}_SOURCE_DIR:${${proj}_SOURCE_DIR}")
   ExternalProject_Message(${proj} "Slicer_INSTALL_THIRDPARTY_LIB_DIR = ${Slicer_INSTALL_THIRDPARTY_LIB_DIR}")
 
@@ -92,6 +93,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       # Disable OpenCL: Initially disabled because of build errors on MacOSX 10.6 (See #17)
       -DWITH_OPENCL:BOOL=OFF
       -DCUDA_GENERATION:STRING=${Slicer_CUDA_GENERATION}
+      -DWITH_CUDA:BOOL=${SlicerOpenCV_USE_CUDA}
       # Disable find_package(Java) so that java wrapping is not done
       -DCMAKE_DISABLE_FIND_PACKAGE_JAVA:BOOL=ON
       # Add Python wrapping, use Slicer's python
