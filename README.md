@@ -1,13 +1,13 @@
 # SlicerOpenCV
 
-This is an extension that addes OpenCV (http://opencv.org/) to 3D Slicer (http://slicer.org).
+This is an extension that adds OpenCV (https://opencv.org/) to 3D Slicer (https://slicer.org).
 
 See this Slicer labs page for details on what features will be provided by the
 extension, design decisions and such:
 
-Planning and development page: http://wiki.slicer.org/slicerWiki/index.php/Documentation/Labs/OpenCV
+Planning and development page: https://wiki.slicer.org/slicerWiki/index.php/Documentation/Labs/OpenCV
 
-Extension documentation page: http://wiki.slicer.org/slicerWiki/index.php/Documentation/Nightly/Extensions/SlicerOpenCV
+Extension documentation page: https://wiki.slicer.org/slicerWiki/index.php/Documentation/Nightly/Extensions/SlicerOpenCV
 
 # Contact
 
