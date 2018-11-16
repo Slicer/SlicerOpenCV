@@ -8,7 +8,7 @@ set(proj ITKVideoBridgeOpenCV)
 set(${proj}_DEPENDENCIES OpenCV)
 ExternalProject_Include_Dependencies(${proj} PROJECT_VAR proj DEPENDS_VAR ${proj}_DEPENDENCIES)
 
-set(ITK_SOURCE_DIR ${ITK_DIR}/../ITKv4)
+set(ITK_SOURCE_DIR ${ITK_DIR}/../ITK)
 set(${proj}_SOURCE_DIR ${ITK_SOURCE_DIR}/Modules/Video/BridgeOpenCV)
 ExternalProject_Message(${proj} "ITK_SOURCE_DIR:${ITK_SOURCE_DIR}")
 ExternalProject_Message(${proj} "${proj}_SOURCE_DIR:${${proj}_SOURCE_DIR}")
