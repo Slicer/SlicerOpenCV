@@ -8,7 +8,7 @@ ExternalProject_Include_Dependencies(${proj} PROJECT_VAR proj DEPENDS_VAR ${proj
 
 if(${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
   unset(OpenCV_DIR CACHE)
-  find_package(OpenCV REQUIRED)
+  find_package(OpenCV 3.4 REQUIRED)
   set(OpenCV_INCLUDE_DIR ${OpenCV_INCLUDE_DIRS})
   set(OpenCV_LIBRARY ${OpenCV_LIBRARIES})
 endif()
@@ -24,15 +24,19 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
     set(git_protocol "git")
   endif()
 
-  if(DEFINED ${proj}_SOURCE_DIR)
-    list(APPEND ${proj}_EP_ARGS DOWNLOAD_COMMAND "")
-  else()
-    set(${proj}_SOURCE_DIR ${CMAKE_BINARY_DIR}/${proj}-source)
-    list(APPEND ${proj}_EP_ARGS
-      URL "https://github.com/Itseez/opencv/archive/3.3.1.tar.gz"
-      URL_MD5 "b1ed9aea030bb5bd9df28524d97de84c"
-      )
-  endif()
+  ExternalProject_SetIfNotDefined(
+    ${CMAKE_PROJECT_NAME}_${proj}_GIT_REPOSITORY
+    "https://github.com/opencv/opencv.git"
+    QUIET
+    )
+
+  ExternalProject_SetIfNotDefined(
+    ${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG
+    "3.4.6"
+    QUIET
+    )
+
+  set(${proj}_SOURCE_DIR ${CMAKE_BINARY_DIR}/${proj})
   set(${proj}_INSTALL_DIR ${CMAKE_BINARY_DIR}/${proj}-install)
 
   if(APPLE)
@@ -41,11 +45,26 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
   endif()
 
   option(SlicerOpenCV_USE_CUDA "Enable or disable the building of CUDA modules" OFF)
-  ExternalProject_Message(${proj} "${proj}_SOURCE_DIR:${${proj}_SOURCE_DIR}")
   ExternalProject_Message(${proj} "Slicer_INSTALL_THIRDPARTY_LIB_DIR = ${Slicer_INSTALL_THIRDPARTY_LIB_DIR}")
+
+  # Determine numpy include folder (if exists)
+  execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "import pkg_resources;pkg=pkg_resources.get_distribution('numpy');print(pkg.location)" 
+    OUTPUT_VARIABLE _numpy_location
+    ERROR_VARIABLE _numpy_error)
+  if(NOT _numpy_location)
+    message("numpy package not found in python distribution. OpenCV python bindings won't be generated.")
+  else()
+    file(TO_CMAKE_PATH ${_numpy_location} _numpy_location)
+    string(STRIP ${_numpy_location} _numpy_location)
+    list(APPEND ADDITIONAL_OPENCV_ARGS
+          -DPYTHON3_NUMPY_INCLUDE_DIRS:PATH=${_numpy_location}/numpy/core/include
+          )
+  endif()
 
   ExternalProject_Add(${proj}
     ${${proj}_EP_ARGS}
+    GIT_REPOSITORY "${${CMAKE_PROJECT_NAME}_${proj}_GIT_REPOSITORY}"
+    GIT_TAG "${${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG}"
     SOURCE_DIR ${${proj}_SOURCE_DIR}
     BINARY_DIR ${proj}-build
     INSTALL_DIR ${${proj}_INSTALL_DIR}
@@ -100,21 +119,26 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       # Disable find_package(Java) so that java wrapping is not done
       -DCMAKE_DISABLE_FIND_PACKAGE_JAVA:BOOL=ON
       # Add Python wrapping, use Slicer's python
-      -DBUILD_opencv_python2:BOOL=ON
-      -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE}
-      -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
-      -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
+      -DOPENCV_SKIP_PYTHON_LOADER:BOOL=ON
+      -DPYTHON3_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE}
+      -DPYTHON3_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
+      -DPYTHON3_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
+      -DPYTHON3_NUMPY_INCLUDE_DIRS:PATH=
       -DINSTALL_PYTHON_EXAMPLES:BOOL=OFF
       # install the python package in the third party lib dir
-      -DPYTHON2_PACKAGES_PATH:PATH=${Slicer_INSTALL_ROOT}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${PYTHON_SITE_PACKAGES_SUBDIR}
+      -DPYTHON3_PACKAGES_PATH:PATH=${Slicer_INSTALL_ROOT}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${PYTHON_SITE_PACKAGES_SUBDIR}
       ${ADDITIONAL_OPENCV_ARGS}
     DEPENDS
       ${${proj}_DEPENDENCIES}
     )
+
+
   set(OpenCV_DIR ${${proj}_INSTALL_DIR})
   if(UNIX)
     set(OpenCV_DIR ${${proj}_INSTALL_DIR}/share/OpenCV)
   endif()
+
+  ExternalProject_GenerateProjectDescription_Step(${proj})
 else()
   # The project is provided using OpenCV_DIR, nevertheless since other projects
   # may depend on OpenCV, let's add an 'empty' one
