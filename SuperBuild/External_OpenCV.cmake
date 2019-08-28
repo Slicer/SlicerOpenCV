@@ -26,13 +26,13 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_REPOSITORY
-    "https://github.com/opencv/opencv.git"
+    https://github.com/Slicer/opencv.git
     QUIET
     )
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG
-    "3.4.6"
+    3.4.6_user_release_python
     QUIET
     )
 
@@ -42,6 +42,11 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
   if(APPLE)
     # Workaround for OpenCV 3.2+ and OSX clang compiler issues
     list(APPEND ADDITIONAL_OPENCV_ARGS -DBUILD_PROTOBUF:BOOL=OFF)
+  endif()
+
+  option(SlicerOpenCV_FORCE_RELEASE_PYTHON "Force the OpenCV build to use a release python" OFF)
+  if(SlicerOpenCV_FORCE_RELEASE_PYTHON)
+    list(APPEND ADDITIONAL_OPENCV_ARGS -DOPENCV_PYTHON_EXTRA_DEFINITIONS:STRING=CV_RELEASE_PYTHON # Force OpenCV to build using release python even if this is a Debug build
   endif()
 
   option(SlicerOpenCV_USE_CUDA "Enable or disable the building of CUDA modules" OFF)
@@ -60,7 +65,6 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
           -DPYTHON3_NUMPY_INCLUDE_DIRS:PATH=${_numpy_location}/numpy/core/include
           )
   endif()
-
   ExternalProject_Add(${proj}
     ${${proj}_EP_ARGS}
     GIT_REPOSITORY "${${CMAKE_PROJECT_NAME}_${proj}_GIT_REPOSITORY}"
