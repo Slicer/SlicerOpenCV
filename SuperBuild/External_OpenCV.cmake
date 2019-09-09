@@ -32,7 +32,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG
-    3.4.6_user_release_python
+    c8098f6c4001fd1a3a8f599f959beb3833f737b6
     QUIET
     )
 
@@ -44,7 +44,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
     list(APPEND ADDITIONAL_OPENCV_ARGS -DBUILD_PROTOBUF:BOOL=OFF)
   endif()
 
-  option(SlicerOpenCV_FORCE_RELEASE_PYTHON "Force the OpenCV build to use a release python" OFF)
+  option(SlicerOpenCV_FORCE_RELEASE_PYTHON "Force the OpenCV build to use a release python" ON)
   if(SlicerOpenCV_FORCE_RELEASE_PYTHON)
     list(APPEND ADDITIONAL_OPENCV_ARGS -DOPENCV_PYTHON_EXTRA_DEFINITIONS:STRING=CV_RELEASE_PYTHON # Force OpenCV to build using release python even if this is a Debug build
   endif()
@@ -65,6 +65,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
           -DPYTHON3_NUMPY_INCLUDE_DIRS:PATH=${_numpy_location}/numpy/core/include
           )
   endif()
+  
   ExternalProject_Add(${proj}
     ${${proj}_EP_ARGS}
     GIT_REPOSITORY "${${CMAKE_PROJECT_NAME}_${proj}_GIT_REPOSITORY}"
