@@ -26,13 +26,13 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_REPOSITORY
-    "https://github.com/opencv/opencv.git"
+    https://github.com/Slicer/opencv.git
     QUIET
     )
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG
-    "3.4.6"
+    c8098f6c4001fd1a3a8f599f959beb3833f737b6 # slicer-3.4.7-2019.07.25-4a7ca5a29
     QUIET
     )
 
@@ -120,6 +120,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DCMAKE_DISABLE_FIND_PACKAGE_JAVA:BOOL=ON
       # Add Python wrapping, use Slicer's python
       -DOPENCV_SKIP_PYTHON_LOADER:BOOL=ON
+      -DOPENCV_PYTHON_EXTRA_DEFINITIONS:STRING=CV_RELEASE_PYTHON
       -DPYTHON3_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE}
       -DPYTHON3_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
       -DPYTHON3_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
