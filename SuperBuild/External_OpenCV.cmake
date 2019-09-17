@@ -32,7 +32,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG
-    c8098f6c4001fd1a3a8f599f959beb3833f737b6 # slicer-3.4.7-2019.07.25-4a7ca5a29
+    7b6eeaa7daaf246ae574b2651bbadbfde3808bd7 # slicer-3.4.7-2019.07.25-7b6eeaa
     QUIET
     )
 
