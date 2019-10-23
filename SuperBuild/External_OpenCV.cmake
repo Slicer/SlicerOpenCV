@@ -32,7 +32,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG
-    7b6eeaa7daaf246ae574b2651bbadbfde3808bd7 # slicer-3.4.7-2019.07.25-7b6eeaa
+    c452b1b6c4cda7eb78833a0d44783fc5879b7ab8 # slicer-3.4.8-2019.10.16-c452b1
     QUIET
     )
 
@@ -110,8 +110,8 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       -DBUILD_opencv_apps:BOOL=OFF
       -DBUILD_opencv_ts:BOOL=OFF
       -DBUILD_opencv_world:BOOL=OFF
-      # Disable VTK: not used, and is causing problems
-      -DWITH_VTK:BOOL=OFF
+      -DWITH_EIGEN:BOOL=OFF
+      -DVTK_DIR:PATH=${VTK_DIR}
       # Disable OpenCL: Initially disabled because of build errors on MacOSX 10.6 (See #17)
       -DWITH_OPENCL:BOOL=OFF
       -DCUDA_GENERATION:STRING=${Slicer_CUDA_GENERATION}
