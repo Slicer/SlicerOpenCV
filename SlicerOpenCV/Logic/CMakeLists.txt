@@ -7,7 +7,7 @@ find_package(ITK COMPONENTS ITKVideoBridgeOpenCV REQUIRED)
 include(${ITK_USE_FILE})
 
 #-----------------------------------------------------------------------------
-find_package(OpenCV 3.4 REQUIRED)
+find_package(OpenCV 4.1 REQUIRED)
 message(STATUS "OpenCV library status:")
 message(STATUS "    version: ${OpenCV_VERSION}")
 message(STATUS "    libraries: ${OpenCV_LIBS}")
