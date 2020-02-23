@@ -56,7 +56,6 @@ if(NOT Slicer_SOURCE_DIR)
   # Configure 'SlicerOpenCVConfig.cmake'
   include(CMakePackageConfigHelpers)
 
-  message("OpenCV_DIR:${OpenCV_DIR}")
   # For a build tree
   set(SHARE_DIR_CONFIG ${CMAKE_BINARY_DIR}/${Slicer_SHARE_DIR})
   set(OpenCV_DIR_CONFIG ${OpenCV_DIR})

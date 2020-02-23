@@ -8,7 +8,7 @@ ExternalProject_Include_Dependencies(${proj} PROJECT_VAR proj DEPENDS_VAR ${proj
 
 if(${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
   unset(OpenCV_DIR CACHE)
-  find_package(OpenCV 3.4 REQUIRED)
+  find_package(OpenCV 4.1 REQUIRED)
   set(OpenCV_INCLUDE_DIR ${OpenCV_INCLUDE_DIRS})
   set(OpenCV_LIBRARY ${OpenCV_LIBRARIES})
 endif()
@@ -32,7 +32,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG
-    c452b1b6c4cda7eb78833a0d44783fc5879b7ab8 # slicer-3.4.8-2019.10.16-c452b1
+    1a5bc64b981bb2d2945f6499a3adbad12aad54bf # slicer-4.1.2-2020.02.22-1a5bc6
     QUIET
     )
 
