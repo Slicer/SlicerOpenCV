@@ -1,7 +1,7 @@
 set(proj OpenCV)
 
 # Set dependency list
-set(${proj}_DEPENDENCIES "")
+set(${proj}_DEPENDENCIES OpenCV_contrib) # Ensure OpenCV contrib is checked out first
 
 # Include dependent projects if any
 ExternalProject_Include_Dependencies(${proj} PROJECT_VAR proj DEPENDS_VAR ${proj}_DEPENDENCIES)
@@ -129,6 +129,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
       # install the python package in the third party lib dir
       -DPYTHON3_PACKAGES_PATH:PATH=${Slicer_INSTALL_ROOT}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${PYTHON_SITE_PACKAGES_SUBDIR}
       ${ADDITIONAL_OPENCV_ARGS}
+      -DOPENCV_EXTRA_MODULES_PATH:PATH=${OpenCV_contrib_SOURCE_DIR}/modules
     DEPENDS
       ${${proj}_DEPENDENCIES}
     )

@@ -27,7 +27,7 @@
 #include <vtkObjectFactory.h>
 
 // ITK includes
-#include <itkOpenCVVideoIOFactory.h>
+//#include <itkOpenCVVideoIOFactory.h>
 
 //----------------------------------------------------------------------------
 vtkStandardNewMacro(vtkSlicerOpenCVLogic);
@@ -36,8 +36,7 @@ vtkStandardNewMacro(vtkSlicerOpenCVLogic);
 vtkSlicerOpenCVLogic::vtkSlicerOpenCVLogic()
 {
   // register the OpenCV ITK IO factory
-  itk::ObjectFactoryBase::RegisterFactory( itk::OpenCVVideoIOFactory::New() );
-
+  //itk::ObjectFactoryBase::RegisterFactory( itk::OpenCVVideoIOFactory::New() );
 }
 
 //----------------------------------------------------------------------------

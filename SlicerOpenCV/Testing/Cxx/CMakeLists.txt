@@ -1,13 +1,13 @@
 set(KIT qSlicer${MODULE_NAME}Module)
 
 #-----------------------------------------------------------------------------
-find_package(ITK COMPONENTS ITKVideoBridgeOpenCV REQUIRED)
-include(${ITK_USE_FILE})
+#find_package(ITK COMPONENTS ITKVideoBridgeOpenCV REQUIRED)
+#include(${ITK_USE_FILE})
 
 #-----------------------------------------------------------------------------
 set(KIT_TEST_SRCS
   #qSlicer${MODULE_NAME}ModuleTest.cxx
-  vtkSlicerOpenCVLogicTest1.cxx
+  #vtkSlicerOpenCVLogicTest1.cxx
   )
 
 #-----------------------------------------------------------------------------
@@ -21,4 +21,5 @@ slicerMacroConfigureModuleCxxTestDriver(
 #-----------------------------------------------------------------------------
 #simple_test(qSlicer${MODULE_NAME}ModuleTest)
 
-simple_test(vtkSlicerOpenCVLogicTest1)
+# Disable test until ITKOpenCVVideoBridge is fixed
+#simple_test(vtkSlicerOpenCVLogicTest1)
