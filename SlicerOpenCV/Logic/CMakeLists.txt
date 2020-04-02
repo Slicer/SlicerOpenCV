@@ -3,8 +3,8 @@ project(vtkSlicer${MODULE_NAME}ModuleLogic)
 set(KIT ${PROJECT_NAME})
 
 #-----------------------------------------------------------------------------
-#find_package(ITK COMPONENTS ITKVideoBridgeOpenCV REQUIRED)
-#include(${ITK_USE_FILE})
+find_package(ITK COMPONENTS ITKVideoBridgeOpenCV REQUIRED)
+include(${ITK_USE_FILE})
 
 #-----------------------------------------------------------------------------
 find_package(OpenCV 4.1 REQUIRED)
@@ -27,7 +27,7 @@ set(${KIT}_SRCS
 set(${KIT}_TARGET_LIBRARIES
   ${VTK_LIBRARIES}
   ${OpenCV_LIBS}
-#  ${ITK_LIBRARIES}
+  ${ITK_LIBRARIES}
   )
 
 #-----------------------------------------------------------------------------

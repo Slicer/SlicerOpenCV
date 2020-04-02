@@ -46,7 +46,7 @@ set(OpenCV_STATIC 1)
 mark_as_superbuild(VARS OpenCV_STATIC ALL_PROJECTS)
 
 set(proj ${SUPERBUILD_TOPLEVEL_PROJECT})
-set(${proj}_DEPENDS OpenCV)#ITKVideoBridgeOpenCV)
+set(${proj}_DEPENDS ITKVideoBridgeOpenCV)
 
 ExternalProject_Include_Dependencies(${proj}
   PROJECT_VAR proj
