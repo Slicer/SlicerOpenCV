@@ -27,13 +27,13 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_REPOSITORY
-    https://github.com/Slicer/opencv_contrib.git
+    https://github.com/opencv/opencv_contrib.git
     QUIET
     )
 
   ExternalProject_SetIfNotDefined(
     ${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG
-    slicer-4.1.2-55445d
+    4.5.5
     QUIET
     )
 
