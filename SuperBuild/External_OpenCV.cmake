@@ -1,7 +1,12 @@
 set(proj OpenCV)
 
 # Set dependency list
-set(${proj}_DEPENDENCIES OpenCV_contrib) # Ensure OpenCV contrib is checked out first
+set(${proj}_DEPENDENCIES "")
+if(NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${proj})
+  list(APPEND ${proj}_DEPENDENCIES
+    OpenCV_contrib
+    )
+endif()
 
 # Include dependent projects if any
 ExternalProject_Include_Dependencies(${proj} PROJECT_VAR proj DEPENDS_VAR ${proj}_DEPENDENCIES)
@@ -9,6 +14,9 @@ ExternalProject_Include_Dependencies(${proj} PROJECT_VAR proj DEPENDS_VAR ${proj
 if(${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${proj})
   unset(OpenCV_DIR CACHE)
   find_package(OpenCV 4.1 REQUIRED)
+  if(NOT OPENCV_ARUCO_FOUND)
+    message(FATAL_ERROR System OpenCV not built with contrib modules)
+  endif()
   set(OpenCV_INCLUDE_DIR ${OpenCV_INCLUDE_DIRS})
   set(OpenCV_LIBRARY ${OpenCV_LIBRARIES})
 endif()
