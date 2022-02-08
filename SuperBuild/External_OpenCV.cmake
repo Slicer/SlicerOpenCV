@@ -6,7 +6,7 @@ set(${proj}_DEPENDENCIES OpenCV_contrib) # Ensure OpenCV contrib is checked out 
 # Include dependent projects if any
 ExternalProject_Include_Dependencies(${proj} PROJECT_VAR proj DEPENDS_VAR ${proj}_DEPENDENCIES)
 
-if(${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
+if(${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${proj})
   unset(OpenCV_DIR CACHE)
   find_package(OpenCV 4.1 REQUIRED)
   set(OpenCV_INCLUDE_DIR ${OpenCV_INCLUDE_DIRS})
@@ -18,20 +18,20 @@ if(DEFINED OpenCV_DIR AND NOT EXISTS ${OpenCV_DIR})
   message(FATAL_ERROR "OpenCV_DIR variable is defined but corresponds to nonexistent directory")
 endif()
 
-if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
+if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${proj})
 
   if(NOT DEFINED git_protocol)
     set(git_protocol "git")
   endif()
 
   ExternalProject_SetIfNotDefined(
-    ${CMAKE_PROJECT_NAME}_${proj}_GIT_REPOSITORY
+    ${SUPERBUILD_TOPLEVEL_PROJECT}_${proj}_GIT_REPOSITORY
     https://github.com/Slicer/opencv.git
     QUIET
     )
 
   ExternalProject_SetIfNotDefined(
-    ${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG
+    ${SUPERBUILD_TOPLEVEL_PROJECT}_${proj}_GIT_TAG
     1a5bc64b981bb2d2945f6499a3adbad12aad54bf # slicer-4.1.2-2020.02.22-1a5bc6
     QUIET
     )
@@ -63,8 +63,8 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
 
   ExternalProject_Add(${proj}
     ${${proj}_EP_ARGS}
-    GIT_REPOSITORY "${${CMAKE_PROJECT_NAME}_${proj}_GIT_REPOSITORY}"
-    GIT_TAG "${${CMAKE_PROJECT_NAME}_${proj}_GIT_TAG}"
+    GIT_REPOSITORY "${${SUPERBUILD_TOPLEVEL_PROJECT}_${proj}_GIT_REPOSITORY}"
+    GIT_TAG "${${SUPERBUILD_TOPLEVEL_PROJECT}_${proj}_GIT_TAG}"
     SOURCE_DIR ${${proj}_SOURCE_DIR}
     BINARY_DIR ${proj}-build
     INSTALL_DIR ${${proj}_INSTALL_DIR}
