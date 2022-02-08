@@ -2,11 +2,6 @@ set(proj OpenCV)
 
 # Set dependency list
 set(${proj}_DEPENDENCIES "")
-if(NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${proj})
-  list(APPEND ${proj}_DEPENDENCIES
-    OpenCV_contrib
-    )
-endif()
 
 # Include dependent projects if any
 ExternalProject_Include_Dependencies(${proj} PROJECT_VAR proj DEPENDS_VAR ${proj}_DEPENDENCIES)
@@ -28,7 +23,36 @@ endif()
 
 if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${proj})
 
+  # OpenCV_contrib
+  ExternalProject_SetIfNotDefined(
+    ${SUPERBUILD_TOPLEVEL_PROJECT}_OpenCV_contrib_GIT_REPOSITORY
+    "https://github.com/Slicer/opencv_contrib.git"
+    QUIET
+    )
 
+  ExternalProject_SetIfNotDefined(
+    ${SUPERBUILD_TOPLEVEL_PROJECT}_OpenCV_contrib_GIT_TAG
+    "55445db730b54144c5855606dd523ec0f3cc0ab5" # slicer-4.1.2-55445d
+    QUIET
+    )
+
+  set(OpenCV_contrib_SOURCE_DIR ${CMAKE_BINARY_DIR}/OpenCV_contrib)
+  ExternalProject_Message(${proj} "OpenCV_contrib_SOURCE_DIR:${OpenCV_contrib_SOURCE_DIR}")
+  ExternalProject_Add(OpenCV_contrib-source
+    GIT_REPOSITORY "${${SUPERBUILD_TOPLEVEL_PROJECT}_OpenCV_contrib_GIT_REPOSITORY}"
+    GIT_TAG "${${SUPERBUILD_TOPLEVEL_PROJECT}_OpenCV_contrib_GIT_TAG}"
+    DOWNLOAD_DIR ${CMAKE_BINARY_DIR}
+    SOURCE_DIR ${OpenCV_contrib_SOURCE_DIR}
+    BUILD_IN_SOURCE 1
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    INSTALL_COMMAND ""
+    )
+  list(APPEND ${proj}_DEPENDENCIES
+    OpenCV_contrib-source
+    )
+
+  # OpenCV
   ExternalProject_SetIfNotDefined(
     ${SUPERBUILD_TOPLEVEL_PROJECT}_${proj}_GIT_REPOSITORY
     https://github.com/Slicer/opencv.git
