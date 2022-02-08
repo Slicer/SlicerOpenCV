@@ -20,9 +20,6 @@ find_package(Slicer REQUIRED)
 include(${Slicer_USE_FILE})
 mark_as_superbuild(Slicer_DIR)
 
-find_package(Git REQUIRED)
-mark_as_superbuild(GIT_EXECUTABLE)
-
 message(STATUS "${PROJECT_NAME}: PYTHON_EXECUTABLE = ${PYTHON_EXECUTABLE}")
 
 #-----------------------------------------------------------------------------
