@@ -133,7 +133,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
       -DWITH_OPENCL:BOOL=OFF # Initially disabled because of build errors on MacOSX 10.6 (See #17)
       -DCUDA_GENERATION:STRING=${Slicer_CUDA_GENERATION}
       -DWITH_CUDA:BOOL=${SlicerOpenCV_USE_CUDA}
-      -DCMAKE_DISABLE_FIND_PACKAGE_JAVA:BOOL=ON # Disable find_package(Java) so that java wrapping is not done
+      -DBUILD_JAVA:BOOL=OFF
 
       # Options: Python
       -DOPENCV_SKIP_PYTHON_LOADER:BOOL=ON
