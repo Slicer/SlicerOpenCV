@@ -61,7 +61,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
 
   ExternalProject_SetIfNotDefined(
     ${SUPERBUILD_TOPLEVEL_PROJECT}_${proj}_GIT_TAG
-    1a5bc64b981bb2d2945f6499a3adbad12aad54bf # slicer-4.1.2-2020.02.22-1a5bc6
+    "f0753aa938e64e3ae57ed1b8e203092cc110237b" # slicer-4.1.2-2020.02.22-1a5bc6
     QUIET
     )
 
