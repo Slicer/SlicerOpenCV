@@ -6,16 +6,17 @@ set(Slicer_CUDA_GENERATION "" CACHE STRING "Build CUDA device code only for spec
 set_property(CACHE Slicer_CUDA_GENERATION PROPERTY STRINGS "" "Fermi" "Kepler" "Maxwell" "Pascal" "Volta")
 
 #-----------------------------------------------------------------------------
-# Enable and setup External project global properties
+# External project common settings
 #-----------------------------------------------------------------------------
 
 set(ep_common_c_flags "${CMAKE_C_FLAGS_INIT} ${ADDITIONAL_C_FLAGS}")
 set(ep_common_cxx_flags "${CMAKE_CXX_FLAGS_INIT} ${ADDITIONAL_CXX_FLAGS}")
 
 #-----------------------------------------------------------------------------
-# Project dependencies
+# Top-level "external" project
 #-----------------------------------------------------------------------------
 
+# Extension dependencies
 foreach(dep ${EXTENSION_DEPENDS})
   mark_as_superbuild(${dep}_DIR)
 endforeach()
@@ -25,8 +26,12 @@ endforeach()
 set(OpenCV_STATIC 1)
 mark_as_superbuild(VARS OpenCV_STATIC ALL_PROJECTS)
 
+# Project dependencies
 set(proj ${SUPERBUILD_TOPLEVEL_PROJECT})
-set(${proj}_DEPENDS ITKVideoBridgeOpenCV)
+
+set(${proj}_DEPENDS
+  ITKVideoBridgeOpenCV
+  )
 
 ExternalProject_Include_Dependencies(${proj}
   PROJECT_VAR proj

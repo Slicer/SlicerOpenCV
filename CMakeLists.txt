@@ -24,6 +24,7 @@ find_package(Git REQUIRED)
 mark_as_superbuild(GIT_EXECUTABLE)
 
 #-----------------------------------------------------------------------------
+# SuperBuild setup
 option(${EXTENSION_NAME}_SUPERBUILD "Build ${EXTENSION_NAME} and the projects it depends on." ON)
 mark_as_advanced(${EXTENSION_NAME}_SUPERBUILD)
 if(${EXTENSION_NAME}_SUPERBUILD)
