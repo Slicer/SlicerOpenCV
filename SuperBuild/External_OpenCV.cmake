@@ -8,7 +8,7 @@ ExternalProject_Include_Dependencies(${proj} PROJECT_VAR proj DEPENDS_VAR ${proj
 
 if(${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${proj})
   unset(OpenCV_DIR CACHE)
-  find_package(OpenCV 4.1 REQUIRED)
+  find_package(OpenCV 4.5 REQUIRED)
   if(NOT OPENCV_ARUCO_FOUND)
     message(FATAL_ERROR System OpenCV not built with contrib modules)
   endif()
@@ -32,7 +32,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
 
   ExternalProject_SetIfNotDefined(
     ${SUPERBUILD_TOPLEVEL_PROJECT}_OpenCV_contrib_GIT_TAG
-    "55445db730b54144c5855606dd523ec0f3cc0ab5" # slicer-4.1.2-55445d
+    "49e8f123ca08e76891856a1ecce491b62d08ba20" # slicer-4.5.5-2021.12.25-49e8f123
     QUIET
     )
 
@@ -61,7 +61,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
 
   ExternalProject_SetIfNotDefined(
     ${SUPERBUILD_TOPLEVEL_PROJECT}_${proj}_GIT_TAG
-    "f0753aa938e64e3ae57ed1b8e203092cc110237b" # slicer-4.1.2-2020.02.22-1a5bc6
+    "7ab1af39429f208bf0a7affe9683bb509cdda5e9" # slicer-4.5.5-2021.12.25-dad26339a9
     QUIET
     )
 
@@ -173,8 +173,10 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
       # Options: OpenCV_contrib
       -DBUILD_opencv_cnn_3dobj:BOOL=OFF # Require Caffe, Glog & Protobuf
       -DBUILD_opencv_hdf:BOOL=OFF # Require HDF5
+      -DBUILD_opencv_julia:BOOL=OFF # Require JlCxx
       -DBUILD_opencv_ovis:BOOL=OFF # Require OGRE
       -DBUILD_opencv_sfm:BOOL=OFF # Require Ceres, Gflags & Glog
+      -DBUILD_opencv_wechat_qrcode:BOOL=OFF # Require Iconv. See https://github.com/Slicer/SlicerOpenCV/issues/72
       -DWITH_TESSERACT:BOOL=OFF # text module
 
       # Install directories
