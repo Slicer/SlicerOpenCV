@@ -75,20 +75,6 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
 
   option(SlicerOpenCV_USE_CUDA "Enable or disable the building of CUDA modules" OFF)
 
-  # Determine numpy include folder (if exists)
-  execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "import pkg_resources;pkg=pkg_resources.get_distribution('numpy');print(pkg.location)" 
-    OUTPUT_VARIABLE _numpy_location
-    ERROR_VARIABLE _numpy_error)
-  if(NOT _numpy_location)
-    message("numpy package not found in python distribution. OpenCV python bindings won't be generated.")
-  else()
-    file(TO_CMAKE_PATH ${_numpy_location} _numpy_location)
-    string(STRIP ${_numpy_location} _numpy_location)
-    list(APPEND ADDITIONAL_OPENCV_ARGS
-          -DPYTHON3_NUMPY_INCLUDE_DIRS:PATH=${_numpy_location}/numpy/core/include
-          )
-  endif()
-
   ExternalProject_Add(${proj}
     ${${proj}_EP_ARGS}
     GIT_REPOSITORY "${${SUPERBUILD_TOPLEVEL_PROJECT}_${proj}_GIT_REPOSITORY}"
