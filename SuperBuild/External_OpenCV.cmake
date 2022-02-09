@@ -149,6 +149,13 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
       # Dependencies: VTK
       -DVTK_DIR:PATH=${VTK_DIR}
 
+      # Dependencies: ZLIB
+      #-DZLIB_ROOT:PATH=${ZLIB_ROOT}
+      #-DZLIB_INCLUDE_DIR:PATH=${ZLIB_INCLUDE_DIR}
+      #-DZLIB_LIBRARY:FILEPATH=${ZLIB_LIBRARY}
+      #-DCMAKE_POLICY_DEFAULT_CMP0074:STRING=NEW # Explicitly set to NEW to ensure ZLIB_ROOT is not ignored.
+      -DBUILD_ZLIB:BOOL=ON # See https://github.com/Slicer/SlicerOpenCV/issues/71
+
       # Dependencies: OpenCV_contrib
       -DOPENCV_EXTRA_MODULES_PATH:PATH=${OpenCV_contrib_SOURCE_DIR}/modules
 
