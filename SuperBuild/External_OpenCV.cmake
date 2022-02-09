@@ -149,7 +149,14 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
       # Dependencies: VTK
       -DVTK_DIR:PATH=${VTK_DIR}
 
-      # Dependencies: ZLIB
+      # Dependencies: Media I/O
+      -DBUILD_JPEG:BOOL=ON
+      -DBUILD_OPENEXR:BOOL=ON
+      -DBUILD_PNG:BOOL=ON
+      -DBUILD_TIFF:BOOL=ON
+      -DBUILD_WEBP:BOOL=ON
+
+      # Dependencies: Media I/O: ZLIB
       #-DZLIB_ROOT:PATH=${ZLIB_ROOT}
       #-DZLIB_INCLUDE_DIR:PATH=${ZLIB_INCLUDE_DIR}
       #-DZLIB_LIBRARY:FILEPATH=${ZLIB_LIBRARY}
