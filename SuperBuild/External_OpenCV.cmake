@@ -170,6 +170,13 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
       # Dependencies: OpenCV_contrib
       -DOPENCV_EXTRA_MODULES_PATH:PATH=${OpenCV_contrib_SOURCE_DIR}/modules
 
+      # Options: OpenCV_contrib
+      -DBUILD_opencv_cnn_3dobj:BOOL=OFF # Require Caffe, Glog & Protobuf
+      -DBUILD_opencv_hdf:BOOL=OFF # Require HDF5
+      -DBUILD_opencv_ovis:BOOL=OFF # Require OGRE
+      -DBUILD_opencv_sfm:BOOL=OFF # Require Ceres, Gflags & Glog
+      -DWITH_TESSERACT:BOOL=OFF # text module
+
       # Install directories
       -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
       -DPYTHON3_PACKAGES_PATH:PATH=${Slicer_INSTALL_ROOT}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${PYTHON_SITE_PACKAGES_SUBDIR}
