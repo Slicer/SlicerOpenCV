@@ -20,10 +20,6 @@ foreach(dep ${EXTENSION_DEPENDS})
   mark_as_superbuild(${dep}_DIR)
 endforeach()
 
-if(NOT CMAKE_CONFIGURATION_TYPES)
-  mark_as_superbuild(VARS CMAKE_BUILD_TYPE ALL_PROJECTS)
-endif()
-
 # Ensure call to "find_package(OpenCV)" made in any projects
 # look for static libraries
 set(OpenCV_STATIC 1)
