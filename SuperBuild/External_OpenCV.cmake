@@ -91,12 +91,10 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
       -DCMAKE_CXX_STANDARD:STRING=${CMAKE_CXX_STANDARD}
       -DCMAKE_CXX_STANDARD_REQUIRED:BOOL=${CMAKE_CXX_STANDARD_REQUIRED}
       -DCMAKE_CXX_EXTENSIONS:BOOL=${CMAKE_CXX_EXTENSIONS}
+
       # Options
-      -DWITH_IPP:BOOL=OFF
-      # Uses runtime compatible with ITK. See issue #26
-      -DBUILD_WITH_STATIC_CRT:BOOL=OFF
+      -DBUILD_WITH_STATIC_CRT:BOOL=OFF # Uses runtime compatible with ITK. See issue #26
       -DOPENCV_MANGLE_PREFIX:STRING=slicer_opencv_
-      -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
       -DBUILD_SHARED_LIBS:BOOL=OFF
       -DBUILD_DOCS:BOOL=OFF
       -DBUILD_EXAMPLES:BOOL=OFF
@@ -104,6 +102,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
       -DBUILD_TESTING:BOOL=OFF
       -DBUILD_TESTS:BOOL=OFF
       -DBUILD_WITH_DEBUG_INFO:BOOL=OFF
+
       # Enable modules
       -DBUILD_opencv_core:BOOL=ON
       -DBUILD_opencv_highgui:BOOL=ON
@@ -122,30 +121,42 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
       -DBUILD_opencv_stitching:BOOL=ON
       -DBUILD_opencv_superres:BOOL=ON
       -DBUILD_opencv_videostab:BOOL=ON
+
       # Disable unused modules
       -DBUILD_opencv_apps:BOOL=OFF
       -DBUILD_opencv_ts:BOOL=OFF
       -DBUILD_opencv_world:BOOL=OFF
+
+      # Features
+      -DWITH_IPP:BOOL=OFF
       -DWITH_EIGEN:BOOL=OFF
-      -DVTK_DIR:PATH=${VTK_DIR}
-      # Disable OpenCL: Initially disabled because of build errors on MacOSX 10.6 (See #17)
-      -DWITH_OPENCL:BOOL=OFF
+      -DWITH_OPENCL:BOOL=OFF # Initially disabled because of build errors on MacOSX 10.6 (See #17)
       -DCUDA_GENERATION:STRING=${Slicer_CUDA_GENERATION}
       -DWITH_CUDA:BOOL=${SlicerOpenCV_USE_CUDA}
-      # Disable find_package(Java) so that java wrapping is not done
-      -DCMAKE_DISABLE_FIND_PACKAGE_JAVA:BOOL=ON
-      # Add Python wrapping, use Slicer's python
+      -DCMAKE_DISABLE_FIND_PACKAGE_JAVA:BOOL=ON # Disable find_package(Java) so that java wrapping is not done
+
+      # Options: Python
       -DOPENCV_SKIP_PYTHON_LOADER:BOOL=ON
-      -DOPENCV_PYTHON_EXTRA_DEFINITIONS:STRING=CV_RELEASE_PYTHON
+      -DINSTALL_PYTHON_EXAMPLES:BOOL=OFF
+      -DOPENCV_PYTHON_EXTRA_DEFINITIONS:STRING=CV_RELEASE_PYTHON # Specific to Slicer/opencv fork
+
+      # Dependencies: Python
       -DPYTHON3_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE}
       -DPYTHON3_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
       -DPYTHON3_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
       -DPYTHON3_NUMPY_INCLUDE_DIRS:PATH=
-      -DINSTALL_PYTHON_EXAMPLES:BOOL=OFF
-      # install the python package in the third party lib dir
-      -DPYTHON3_PACKAGES_PATH:PATH=${Slicer_INSTALL_ROOT}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${PYTHON_SITE_PACKAGES_SUBDIR}
-      ${ADDITIONAL_OPENCV_ARGS}
+
+      # Dependencies: VTK
+      -DVTK_DIR:PATH=${VTK_DIR}
+
+      # Dependencies: OpenCV_contrib
       -DOPENCV_EXTRA_MODULES_PATH:PATH=${OpenCV_contrib_SOURCE_DIR}/modules
+
+      # Install directories
+      -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+      -DPYTHON3_PACKAGES_PATH:PATH=${Slicer_INSTALL_ROOT}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${PYTHON_SITE_PACKAGES_SUBDIR}
+
+      ${ADDITIONAL_OPENCV_ARGS}
     DEPENDS
       ${${proj}_DEPENDENCIES}
     )
