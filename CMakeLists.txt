@@ -23,9 +23,8 @@ mark_as_superbuild(Slicer_DIR)
 find_package(Git REQUIRED)
 mark_as_superbuild(GIT_EXECUTABLE)
 
-message(STATUS "${PROJECT_NAME}: PYTHON_EXECUTABLE = ${PYTHON_EXECUTABLE}")
-
 #-----------------------------------------------------------------------------
+# SuperBuild setup
 option(${EXTENSION_NAME}_SUPERBUILD "Build ${EXTENSION_NAME} and the projects it depends on." ON)
 mark_as_advanced(${EXTENSION_NAME}_SUPERBUILD)
 if(${EXTENSION_NAME}_SUPERBUILD)
@@ -34,39 +33,31 @@ if(${EXTENSION_NAME}_SUPERBUILD)
 endif()
 
 #-----------------------------------------------------------------------------
-# Clear ${PROJECT_NAME}Targets.cmake
-file(WRITE ${CMAKE_BINARY_DIR}/${Slicer_SHARE_DIR}/${PROJECT_NAME}Targets.cmake "")
-
-#-----------------------------------------------------------------------------
 # Extension modules
 # Slicer wrapper around the library
 add_subdirectory(SlicerOpenCV)
 ## NEXT_MODULE
 
 #-----------------------------------------------------------------------------
-set(CPACK_INSTALL_CMAKE_PROJECTS "${CPACK_INSTALL_CMAKE_PROJECTS};${CMAKE_BINARY_DIR};${EXTENSION_NAME};ALL;/")
-set(CPACK_INSTALL_CMAKE_PROJECTS "${CPACK_INSTALL_CMAKE_PROJECTS};${ITKVideoBridgeOpenCV_DIR};ITKVideoBridgeOpenCV;RuntimeLibraries;/")
-set(CPACK_INSTALL_CMAKE_PROJECTS "${CPACK_INSTALL_CMAKE_PROJECTS};${OpenCV_BUILD_DIR};python;python;/")
-MESSAGE(STATUS "CPACK_INSTALL_CMAKE_PROJECTS = ${CPACK_INSTALL_CMAKE_PROJECTS}")
-
-include(${Slicer_EXTENSION_CPACK})
+set(SlicerOpenCV_CUSTOM_CONFIG "
+set(OpenCV_STATIC \"${OpenCV_STATIC}\")
+set(OpenCV_DIR \"${OpenCV_DIR}\")
+if(NOT SlicerOpenCV_FIND_QUIETLY)
+  message(STATUS \"OpenCV_DIR set to \${OpenCV_DIR}\")
+endif()
+")
 
 #-----------------------------------------------------------------------------
-if(NOT Slicer_SOURCE_DIR)
-  # Configure 'SlicerOpenCVConfig.cmake'
-  include(CMakePackageConfigHelpers)
-
-  # For a build tree
-  set(SHARE_DIR_CONFIG ${CMAKE_BINARY_DIR}/${Slicer_SHARE_DIR})
-  set(OpenCV_DIR_CONFIG ${OpenCV_DIR})
-  set(${PROJECT_NAME}_CONFIG_CODE "####### Expanded from \@SlicerOpenCV_CONFIG_CODE\@ #######\n")
-  set(${PROJECT_NAME}_CONFIG_CODE "${${PROJECT_NAME}_CONFIG_CODE}##################################################")
-  set(_config ${CMAKE_BINARY_DIR}/${PROJECT_NAME}Config.cmake)
-  configure_package_config_file(
-      CMake/${PROJECT_NAME}Config.cmake.in
-      ${_config}
-      INSTALL_DESTINATION ${CMAKE_BINARY_DIR}
-      PATH_VARS SHARE_DIR_CONFIG OpenCV_DIR_CONFIG
-      NO_CHECK_REQUIRED_COMPONENTS_MACRO
-  )
+set(EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS)
+list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${OpenCV_BUILD_DIR};python;python;/")
+if(ITKVideoBridgeOpenCV_DIR)
+  list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${ITKVideoBridgeOpenCV_DIR};ITKVideoBridgeOpenCV;RuntimeLibraries;/")
 endif()
+set(${EXTENSION_NAME}_CPACK_INSTALL_CMAKE_PROJECTS "${EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS}" CACHE STRING "List of external projects to install" FORCE)
+
+#-----------------------------------------------------------------------------
+list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR};${EXTENSION_NAME};ALL;/")
+list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${${EXTENSION_NAME}_CPACK_INSTALL_CMAKE_PROJECTS}")
+include(${Slicer_EXTENSION_GENERATE_CONFIG})
+include(${Slicer_EXTENSION_CPACK})
+

@@ -1,65 +1,42 @@
 
 #-----------------------------------------------------------------------------
-# Git protocol option
-#-----------------------------------------------------------------------------
-option(Slicer_USE_GIT_PROTOCOL "If behind a firewall turn this off to use http instead." ON)
-
-set(git_protocol "git")
-if(NOT Slicer_USE_GIT_PROTOCOL)
-  set(git_protocol "http")
-endif()
-
-#-----------------------------------------------------------------------------
 # Give option to only build for a specific instruction set
 #-----------------------------------------------------------------------------
-set(Slicer_CUDA_GENERATION)
-set(_generations "Fermi" "Kepler" "Maxwell" "Pascal" "Volta")
 set(Slicer_CUDA_GENERATION "" CACHE STRING "Build CUDA device code only for specific GPU architecture. Leave empty to build for all architectures.")
-if( CMAKE_VERSION VERSION_GREATER 2.8 )
-  set_property( CACHE Slicer_CUDA_GENERATION PROPERTY STRINGS "" ${_generations} )
-endif()
+set_property(CACHE Slicer_CUDA_GENERATION PROPERTY STRINGS "" "Fermi" "Kepler" "Maxwell" "Pascal" "Volta")
 
 #-----------------------------------------------------------------------------
-# Enable and setup External project global properties
+# External project common settings
 #-----------------------------------------------------------------------------
 
 set(ep_common_c_flags "${CMAKE_C_FLAGS_INIT} ${ADDITIONAL_C_FLAGS}")
 set(ep_common_cxx_flags "${CMAKE_CXX_FLAGS_INIT} ${ADDITIONAL_CXX_FLAGS}")
 
 #-----------------------------------------------------------------------------
-# Project dependencies
+# Top-level "external" project
 #-----------------------------------------------------------------------------
 
-include(ExternalProject)
-
+# Extension dependencies
 foreach(dep ${EXTENSION_DEPENDS})
   mark_as_superbuild(${dep}_DIR)
 endforeach()
-
-if(NOT CMAKE_CONFIGURATION_TYPES)
-  mark_as_superbuild(VARS CMAKE_BUILD_TYPE ALL_PROJECTS)
-endif()
 
 # Ensure call to "find_package(OpenCV)" made in any projects
 # look for static libraries
 set(OpenCV_STATIC 1)
 mark_as_superbuild(VARS OpenCV_STATIC ALL_PROJECTS)
 
+# Project dependencies
 set(proj ${SUPERBUILD_TOPLEVEL_PROJECT})
-set(${proj}_DEPENDS ITKVideoBridgeOpenCV)
+
+set(${proj}_DEPENDS
+  ITKVideoBridgeOpenCV
+  )
 
 ExternalProject_Include_Dependencies(${proj}
   PROJECT_VAR proj
   SUPERBUILD_VAR ${EXTENSION_NAME}_SUPERBUILD
   )
-
-# XXX Workaround https://gitlab.kitware.com/cmake/cmake/issues/15448
-#     and explicitly pass GIT_EXECUTABLE and Subversion_SVN_EXECUTABLE
-foreach(varname IN ITEMS GIT_EXECUTABLE Subversion_SVN_EXECUTABLE)
-  if(EXISTS "${${varname}}")
-    list(APPEND DCMQI_EP_CMAKE_CACHE_ARGS -D${varname}:FILEPATH=${${varname}})
-  endif()
-endforeach()
 
 ExternalProject_Add(${proj}
   ${${proj}_EP_ARGS}
@@ -80,7 +57,6 @@ ExternalProject_Add(${proj}
     -DMIDAS_PACKAGE_API_KEY:STRING=${MIDAS_PACKAGE_API_KEY}
     -D${EXTENSION_NAME}_SUPERBUILD:BOOL=OFF
     -DEXTENSION_SUPERBUILD_BINARY_DIR:PATH=${${EXTENSION_NAME}_BINARY_DIR}
-    ${DCMQI_EP_CMAKE_CACHE_ARGS}
   DEPENDS
     ${${proj}_DEPENDS}
   )
