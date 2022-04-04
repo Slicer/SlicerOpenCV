@@ -40,7 +40,6 @@ add_subdirectory(SlicerOpenCV)
 
 #-----------------------------------------------------------------------------
 set(SlicerOpenCV_CUSTOM_CONFIG "
-set(OpenCV_STATIC \"${OpenCV_STATIC}\")
 set(OpenCV_DIR \"${OpenCV_DIR}\")
 if(NOT SlicerOpenCV_FIND_QUIETLY)
   message(STATUS \"OpenCV_DIR set to \${OpenCV_DIR}\")
@@ -49,7 +48,8 @@ endif()
 
 #-----------------------------------------------------------------------------
 set(EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS)
-list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${OpenCV_BUILD_DIR};python;python;/")
+list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${OpenCV_BUILD_DIR};OpenCVPython;python;/")
+list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${OpenCV_BUILD_DIR};OpenCV;libs;/")
 if(ITKVideoBridgeOpenCV_DIR)
   list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${ITKVideoBridgeOpenCV_DIR};ITKVideoBridgeOpenCV;RuntimeLibraries;/")
 endif()
