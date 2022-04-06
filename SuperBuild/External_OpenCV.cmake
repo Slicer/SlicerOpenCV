@@ -153,6 +153,13 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
       # Dependencies: VTK
       -DVTK_DIR:PATH=${VTK_DIR}
 
+      # Dependencies: ZLIB
+      -DBUILD_ZLIB:BOOL=OFF
+      -DZLIB_ROOT:PATH=${ZLIB_ROOT}
+      -DZLIB_INCLUDE_DIR:PATH=${ZLIB_INCLUDE_DIR}
+      -DZLIB_LIBRARY:FILEPATH=${ZLIB_LIBRARY}
+      -DCMAKE_POLICY_DEFAULT_CMP0074:STRING=NEW # Explicitly set to NEW to ensure ZLIB_ROOT is not ignored.
+
       # Dependencies: Media I/O
       -DBUILD_JPEG:BOOL=ON
       -DBUILD_OPENEXR:BOOL=ON
