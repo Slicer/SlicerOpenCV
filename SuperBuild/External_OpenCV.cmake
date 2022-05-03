@@ -198,7 +198,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
 
   set(OpenCV_DIR ${${proj}_INSTALL_DIR})
   if(UNIX)
-    set(OpenCV_DIR ${${proj}_INSTALL_DIR}/lib/cmake/opencv4/)
+    set(OpenCV_DIR ${${proj}_INSTALL_DIR}/lib64/cmake/opencv4/)
   endif()
 
   ExternalProject_GenerateProjectDescription_Step(${proj})
