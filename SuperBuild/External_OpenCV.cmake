@@ -146,9 +146,17 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
       -DOPENCV_PYTHON_EXTRA_DEFINITIONS:STRING=CV_RELEASE_PYTHON # Specific to Slicer/opencv fork
 
       # Dependencies: Python
+      # - Options expected by the OpenCV custom CMake function "find_python()"
+      #   implemented in "cmake/OpenCVDetectPython.cmake"
       -DPYTHON3_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE}
       -DPYTHON3_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
       -DPYTHON3_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
+      # - Options expected by the FindPythonInterp and FindPythonLibs CMake built-in modules
+      #   indirectly used in the OpenCV custom CMake macro "find_host_package"
+      #   implemented in "cmake/OpenCVUtils.cmake" and used in "find_python()".
+      -DPYTHON_EXECUTABLE:PATH=${PYTHON_EXECUTABLE}
+      -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
+      -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
 
       # Dependencies: VTK
       -DVTK_DIR:PATH=${VTK_DIR}
