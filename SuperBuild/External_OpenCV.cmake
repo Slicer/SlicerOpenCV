@@ -61,7 +61,7 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
 
   ExternalProject_SetIfNotDefined(
     ${SUPERBUILD_TOPLEVEL_PROJECT}_${proj}_GIT_TAG
-    "7ab1af39429f208bf0a7affe9683bb509cdda5e9" # slicer-4.5.5-2021.12.25-dad26339a9
+    "498d4690b2331a813357d628d6a4549925033ce2" # slicer-4.5.5-2021.12.25-dad26339a9
     QUIET
     )
 
@@ -146,6 +146,8 @@ if(NOT DEFINED OpenCV_DIR AND NOT ${SUPERBUILD_TOPLEVEL_PROJECT}_USE_SYSTEM_${pr
       -DOPENCV_PYTHON_EXTRA_DEFINITIONS:STRING=CV_RELEASE_PYTHON # Specific to Slicer/opencv fork
 
       # Dependencies: Python
+      # - Options expected by the OpenCV custom CMake function "find_python()"
+      #   implemented in "cmake/OpenCVDetectPython.cmake"
       -DPYTHON3_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE}
       -DPYTHON3_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
       -DPYTHON3_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
