@@ -4,7 +4,7 @@ project(SlicerOpenCV)
 
 #-----------------------------------------------------------------------------
 # Extension meta-information
-set(EXTENSION_HOMEPAGE "http://slicer.org/slicerWiki/index.php/Documentation/Nightly/Extensions/SlicerOpenCV")
+set(EXTENSION_HOMEPAGE "https://slicer.org/slicerWiki/index.php/Documentation/Nightly/Extensions/SlicerOpenCV")
 set(EXTENSION_CATEGORY "Libraries")
 set(EXTENSION_CONTRIBUTORS "Nicole Aucoin (BWH), Andrey Fedorov (BWH), Jean-Christophe Fillion-Robin (Kitware)")
 set(EXTENSION_DESCRIPTION "This extension provides a wrapper around OpenCV libraries")
